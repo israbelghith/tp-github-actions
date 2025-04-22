@@ -1,15 +1,24 @@
-name: Mon Premier Workflow	# Nom du workflow
+name: Test Python Workflow
 
-on: 
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout de code
+      - name: Checkout du code
         uses: actions/checkout@v3
 
-      - name: Afficher un message
-        run: echo "Hello from GitHub Actions!"
+      - name: Installer Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Installer les dépendances
+        run: |
+          pip install pytest
+          pip install -r requirements.txt || true  # Évite une erreur si le fichier n'existe pas
+
+      - name: Exécuter les tests
+        run: pytest
