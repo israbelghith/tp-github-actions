@@ -1,0 +1,15 @@
+name: Mon Premier Workflow	# Nom du workflow
+
+on: 
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout de code
+        uses: actions/checkout@v3
+
+      - name: Afficher un message
+        run: echo "Hello from GitHub Actions!"
