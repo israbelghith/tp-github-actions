@@ -1,0 +1,20 @@
+name: Déploiement Automatisé
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Construire et pousser l’image Docker
+        run: |
+          docker build -t isra2/flask-app .
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push mon-dockerhub/flask-app
